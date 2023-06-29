@@ -58,3 +58,21 @@
     max-width: 50px;
     text-align: center;
 }
+
+.cart{
+  width: 500px;
+  height: max-content;
+  padding: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-header{
+ display: flex;
+justify-content: space-around;
+}
+
+.btn-outline-info{
+  border: 1px solid black;
+  color: teal;
+}

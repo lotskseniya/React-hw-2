@@ -12,6 +12,7 @@ export const Cart = (props) => {
 
   const [isCartOpen, setIsCartOpen] = useState(false);
 
+ 
   return (
     <CartContext.Provider
       value={{ itemsToBuy, totalPrice, setItemsToBuy, setTotalPrice }}
@@ -19,12 +20,14 @@ export const Cart = (props) => {
          <Modal
         appElement={document.getElementById("App")}
         isOpen={isCartOpen}
-        shouldCloseOnOverlayClick={true}
-        className="cart"
+        className="cart modal-dialog"
       >
         <div className="cart-header">
           <h1>Cart</h1>
-          <button>Close</button>
+          <div>
+            {/* <p></p> */}
+          </div>
+          <button type="button" className="btn-close" aria-label="Close"></button>
         </div>
        
         <div className="cart-footer">
@@ -32,7 +35,7 @@ export const Cart = (props) => {
           <button className="purchase">Purchase</button>
         </div>
       </Modal>
-        <button onClick={() => setIsCartOpen(!isCartOpen)}>OPEN MODAL</button>
+        <button onClick={() => setIsCartOpen(!isCartOpen)} className="btn btn-outline-info">Open Cart</button>
 
       {children}
     </CartContext.Provider>
