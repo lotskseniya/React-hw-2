@@ -32,5 +32,29 @@
   .image{
     width: 200px;
     height: auto;
-    justify-self: center;
+    object-fit: contain;
   }
+
+  .item{
+    position: relative;
+    margin: 2px;
+  }
+
+.item-footer {
+    background: lightgray;
+    position: absolute;
+    border-radius: 0px 0px 6px 6px;
+    padding: 2px;
+    bottom: -1px;
+    width: calc(100% - 3px);
+    left: 1px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.item-footer > input[type="number"] {
+    max-width: 50px;
+    text-align: center;
+}

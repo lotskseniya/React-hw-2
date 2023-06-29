@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Item } from "./Item";
+import { Cart } from "./Cart";
 
 export const Shop = () => {
   const [items, setItems] = useState([]);
@@ -24,32 +26,26 @@ export const Shop = () => {
 
   return (
     <div className="wrapper">
-      <header>
-        <h1>Shop</h1>
-        <div className="form">
-          <input
-            className="form-control mr-sm-2"
-            type="text"
-            placeholder="Search for items"
-            value={inputValue}
-            onChange={(event) => setInputValue(event.target.value)}
-          />
-        </div>
-      </header>
-      <main>
-        {(inputValue ? searchResults : items).map((item) => (
-          <div className="col mb-5">
-            <div className="card h-100">
-              <p>
-                <strong>{item.title}</strong>
-              </p>
-              <img src={item.image} alt={item.title} className="image" />
-              <p>{item.price} $</p>
-            </div>
+           <Cart>
+        <header>
+          <h1>Shop</h1>
+          <div className="form">
+            <input
+             className="form-control mr-sm-2"
+              type="text"
+              placeholder="Search for items"
+              value={inputValue}
+              onChange={(event) => setInputValue(event.target.value)}
+            />
           </div>
-        ))}
-      </main>
-      <footer></footer>
+          </header>
+        <main>
+          {(inputValue ? searchResults : items).map((item) => (
+            <Item item={item} key={item.id}/>
+          ))}
+        </main>
+        <footer></footer>
+      </Cart>
     </div>
   );
 };
