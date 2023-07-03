@@ -68,6 +68,14 @@ export const Cart = (props) => {
   })
   console.log(cartItems, "cartItems")
 
+  const sortPrices = (item) => {
+    cartItems.sort(function()) {
+      for (let i = 0; i < cartItems.length; i++) {
+        return item[i + 1].price - item[i].price
+      }
+    });
+   }
+
   return (
     <CartContext.Provider
       value={{
@@ -91,6 +99,7 @@ export const Cart = (props) => {
         </div>
         <div>
           <Sort
+            onChange={sortPrices}
             defaultValue="Sort by:"
             options={[{ price: "price", name: "From highest" }]}
           />
