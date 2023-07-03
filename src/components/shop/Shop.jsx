@@ -6,45 +6,42 @@ export const Shop = () => {
   const [items, setItems] = useState([]);
   const [inputValue, setInputValue] = useState("");
 
-  let searchResults = [];
-  items.forEach((item) => {
-    if (
-      item.title.toLowerCase().includes(inputValue.toLowerCase()) ||
-      item.price === +inputValue
-    ) {
-      searchResults.push(item);
-    }
-  });
+  // const [searchResults, setSearchResults] = useState([]);
+  const searchResults = inputValue
+    ? items.filter((product) => product.title.toLowerCase().includes(inputValue.toLowerCase())
+    || product.price === +inputValue
+    )
+    : [];
 
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         setItems(json);
       });
   }, []);
 
   return (
     <div className="wrapper">
-           <Cart>
-        <header>
-          <h1>Shop</h1>
-          <div className="form">
-            <input
-             className="form-control mr-sm-2"
-              type="text"
-              placeholder="Search for items"
-              value={inputValue}
-              onChange={(event) => setInputValue(event.target.value)}
-            />
-          </div>
-          </header>
-        <main>
-          {(inputValue ? searchResults : items).map((item) => (
-            <Item item={item} key={item.id}/>
-          ))}
-        </main>
-        <footer></footer>
+        <Cart>
+      <header>
+        <h1>Shop</h1>
+        <div className="form">
+          <input
+            type="text"
+            placeholder="Search the product"
+            value={inputValue}
+            onChange={(event) => setInputValue(event.target.value)}
+          />
+        </div>
+      </header>
+      <main>
+        {(inputValue ? searchResults : items).map((item) => (
+          <Item item={item} />
+        ))}
+      </main>
+      <footer></footer>
       </Cart>
     </div>
   );

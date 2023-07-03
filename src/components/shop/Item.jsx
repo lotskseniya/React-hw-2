@@ -3,10 +3,23 @@ import { CartContext } from "../../contexts/cart.context";
 
 export const Item = (props) => {
   const { title, price, image, description } = props.item;
-  const [quantity, setQuantity] = useState(1);
+  const { isCartItem = false, cartQuantity = 1 } = props;
+  const [quantity, setQuantity] = useState(cartQuantity);
 
-  const { itemsToBuy, totalPrice, setItemsToBuy, setTotalPrice } =
-    useContext(CartContext);
+  const {
+    itemsToBuy,
+    setItemsToBy,
+    recalculateTotalPrice,
+    changeItemQuantity,
+  } = useContext(CartContext);
+
+   const onInputChange = (event) => {
+    setQuantity(event.target.value)
+    if (isCartItem) {
+      changeItemQuantity(props.item, event.target.value);
+      recalculateTotalPrice(itemsToBuy);
+    }
+  }
 
   const onAddToCartClick = (item) => {
     const newItems = [];
@@ -14,28 +27,35 @@ export const Item = (props) => {
     for (let i = 0; i < quantity; i++) {
       newItems.push(item);
     }
-
-    setItemsToBuy([...itemsToBuy, ...newItems]);
+  
+    const updatedItems = [...itemsToBuy, ...newItems];
+    setItemsToBy(updatedItems);
+    recalculateTotalPrice(updatedItems)
   };
 
+  // console.log(itemsToBuy, "!!!")
+
+
   return (
-  <div className="item col mb-5">
-    <div className="card h-100">
+    <div className="item">
       <h4>{title}</h4>
-      <p style={{fontSise: '12px'}}>{price}$</p>
-    <img src={image} alt={title} className="image"/>
-    <p>{description.split(" ").slice(0, 40).join(" ")} ...</p>
+      <h5>{price}$</h5>
+      <img src={image} alt={title} />
+      <p>{description.split(" ").slice(0, 40).join(" ")}...</p>
+      <div className="item-footer">
+        <input
+          type="number"
+          value={quantity}
+          onChange={onInputChange}
+        />
+        {!isCartItem ? (
+          <button onClick={() => onAddToCartClick(props.item)}>
+            Add to cart for: <span>{price.toFixed(2) * quantity}</span> ${" "}
+          </button>
+        ) : (
+          <span>{price.toFixed(2) * quantity} $ </span>
+        )}
+      </div>
     </div>
-    <div className="item-footer">
-      <input
-        type="number"
-        value={quantity}
-        onChange={(event) => setQuantity(event.target.value)}
-      />
-      <button onClick={() => onAddToCartClick(props.item)}>
-        Add to cart for: <span>{price * quantity}</span>$
-      </button>
-    </div>
-  </div>
-    );
+  );
 };
