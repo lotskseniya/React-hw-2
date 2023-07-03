@@ -94,8 +94,12 @@ export const Cart = (props) => {
             defaultValue="Sort by:"
             options={[{ price: "price", name: "From highest" }]}
           />
-          {resultOfGruppedItems.map(({ item, quantity }) => (
-            <Item item={item} isCartItem={true} cartQuantity={quantity} />
+          {cartItems.map(({ name, quantity, price }) => (
+            <div>
+               <h3>{name}</h3>
+               <input type="number" value={quantity} onChange={changeItemQuantity}></input>
+               <h4>{price}</h4>
+            </div>
           ))}
 
         </div>
