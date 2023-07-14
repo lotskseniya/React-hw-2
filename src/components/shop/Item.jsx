@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Cart } from "./Cart";
 import { CartContext } from "../../contexts/cart.context";
 
 export const Item = (props) => {
@@ -8,16 +9,15 @@ export const Item = (props) => {
 
   const {
     itemsToBuy,
-    setItemsToBy,
-    recalculateTotalPrice,
-    changeItemQuantity,
+    setCartData,
+    changeItemQuantityAndPrice,
   } = useContext(CartContext);
 
-   const onInputChange = (event) => {
+  
+  const onInputChange = (event) => {
     setQuantity(event.target.value)
     if (isCartItem) {
-      changeItemQuantity(props.item, event.target.value);
-      recalculateTotalPrice(itemsToBuy);
+      changeItemQuantityAndPrice(props.item, event.target.value);
     }
   }
 
@@ -27,21 +27,23 @@ export const Item = (props) => {
     for (let i = 0; i < quantity; i++) {
       newItems.push(item);
     }
-  
+
     const updatedItems = [...itemsToBuy, ...newItems];
-    setItemsToBy(updatedItems);
-    recalculateTotalPrice(updatedItems)
+
+    setCartData({
+      itemsToBuy: updatedItems, 
+      totalPrice: updatedItems.reduce((acc, item) => (acc += item.price), 0),
+    });
+
+
   };
-
-  // console.log(itemsToBuy, "!!!")
-
 
   return (
     <div className="item">
       <h4>{title}</h4>
       <h5>{price}$</h5>
       <img src={image} alt={title} />
-      <p>{description.split(" ").slice(0, 40).join(" ")}...</p>
+      <p className="item-description">{description}</p>
       <div className="item-footer">
         <input
           type="number"
@@ -50,11 +52,12 @@ export const Item = (props) => {
         />
         {!isCartItem ? (
           <button onClick={() => onAddToCartClick(props.item)}>
-            Add to cart for: <span>{price.toFixed(2) * quantity}</span> ${" "}
+            Add to cart for: <span>{(price * quantity).toFixed(2)}</span> ${" "}
           </button>
         ) : (
-          <span>{price.toFixed(2) * quantity} $ </span>
+          <span>{(price * quantity).toFixed(2)} $ </span>
         )}
+     
       </div>
     </div>
   );
