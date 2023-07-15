@@ -10,16 +10,18 @@ export const useFetchData = (
 
   useEffect(() => {
     (async () => {
-      try {
-        setIsLoading(true);
-        const jsonData = await fetch(url, options);
-        const parsedData = await jsonData.json();
-        setData({data: parsedData, error: null})
-      } catch (error) {
-        setData({data: null, error});
-      } finally {
-        setIsLoading(false)
-      }
+      setIsLoading(true); 
+      setTimeout(async () => {
+        try {
+            const jsonData = await fetch(url, options);
+            const parsedData = await jsonData.json();
+            setData({data: parsedData, error: null})
+        } catch (error) {
+          setData({data: null, error});
+        } finally {
+            setIsLoading(false);  
+        }
+    }, 5000);
     })();
   }, [url]);
 

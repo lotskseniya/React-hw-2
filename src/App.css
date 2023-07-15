@@ -11,6 +11,14 @@
   align-items: center;
 }
 
+.input-style {
+  width: 40vw;
+  height: 5vh;
+  border-radius: 5px;
+  border: none;
+  background-color: lightgrey;
+}
+
 main {
   width: 100%;
   display: flex;
@@ -92,7 +100,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: lightgray;
+  background: #dfdddd;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -120,7 +128,7 @@ main {
   background-color: lightgrey;
   display: flex;
   flex-wrap: nowrap;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
 }
 
@@ -139,8 +147,10 @@ transform: scale(110%);
 }
 
 .loader-wrapper {
+  z-index: 1;
   display: flex;
   justify-content: center;
+  align-self: center;
 }
 
 .purchase {
